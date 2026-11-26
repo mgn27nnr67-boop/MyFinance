@@ -2616,7 +2616,7 @@ const Cloud = (() => {
 /* Інтерфейс «MyFinance» v2 — нативний iOS-стиль. */
 'use strict';
 
-const APP_VERSION = '3.16.2';
+const APP_VERSION = '3.16.4';
 const MONTHS = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
 const MONTHS_GEN = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'];
 const MONTHS_SHORT = ['січ', 'лют', 'бер', 'кві', 'тра', 'чер', 'лип', 'сер', 'вер', 'жов', 'лис', 'гру'];
@@ -2995,9 +2995,9 @@ function openTxPeriod() {
   });
 }
 /** Календар у «Операціях»: тап по дню — операції цього дня. */
-function openTxCalendar(mkIn) {
+function openTxCalendar(mkIn, opts = {}) {
   let mk = mkIn || (state.txPeriod === 'day' ? state.txFrom.slice(0, 7) : Core.monthKey(Core.today()));
-  const wrap = openSheet({ title: 'Календар', auto: true, left: null, right: { text: 'Готово', fn: closeSheet }, body: '<div id="calBody"></div>' });
+  const wrap = openSheet({ instant: !!opts.instant, title: 'Календар', auto: true, left: null, right: { text: 'Готово', fn: closeSheet }, body: '<div id="calBody"></div>' });
   const body = $('#calBody', wrap);
   const draw = () => {
     body.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 20px 4px">
@@ -3014,8 +3014,8 @@ function openTxCalendar(mkIn) {
       closeAllSheets();
       // новий день заміщає попередній, а не накладається: «назад» повертає туди, звідки вперше відкрили календар
       const top = state.history[state.history.length - 1];
-      if (top && top.cal && state.tab === 'tx' && state.txPeriod === 'day') top.reopen = () => openTxCalendar(m);
-      else { backToHere('Календар', () => openTxCalendar(m)); state.history[state.history.length - 1].cal = true; }
+      if (top && top.cal && state.tab === 'tx' && state.txPeriod === 'day') top.reopen = () => openTxCalendar(m, { instant: true });
+      else { backToHere('Календар', () => openTxCalendar(m, { instant: true })); state.history[state.history.length - 1].cal = true; }
       state.tab = 'tx'; state.txType = 'all'; state.txCats = []; state.txAccs = []; state.txQuery = ''; state.txPeriod = 'day'; state.txFrom = state.txTo = b.dataset.id; render(); window.scrollTo(0, 0); return;
     }
     draw();
@@ -4190,7 +4190,7 @@ document.addEventListener('click', (e) => {
     case 'strategy': openStrategy(); break;
     case 'analytics': openAnalytics(); break;
     case 'forecast': openForecast(); break;
-    case 'hint-off': Core.setSetting('hideStrategyHint', true); toast('План можна налаштувати в ⚙︎ → «План: ліміт на день»'); break;
+    case 'hint-off': Core.setSetting('hideStrategyHint', new Date().toISOString()); toast('Підказка повернеться з наступним надходженням. План — у ⚙︎ → «План: ліміт на день»'); render(); break;
     case 'week-open': openAnalytics(null, { weeks: true }); break;
     case 'nospend-hide': Core.setSetting('noSpendHidden', Core.today()); render(); break;
     case 'nospend-ask': {
@@ -4952,8 +4952,11 @@ function planCard(po) {
     ${!isDebt && !toAcc ? '<div class="group-foot">Щоб відкладати одним тапом, привʼяжіть до цілі рахунок у гривнях (Гроші → ціль).</div>' : ''}`;
 }
 function strategyHint() {
-  if (Core.activePlan() || Core.db.settings.hideStrategyHint) return '';
-  if (!Core.db.transactions.some((t) => !t.deleted && t.type === 'income' && t.source !== 'sheet')) return ''; // лише після першого надходження в трекері
+  if (Core.activePlan()) return '';
+  // показуємо завжди; якщо закрили ✕ — знову зʼявиться з першим новим надходженням після цього
+  let hid = Core.db.settings.hideStrategyHint;
+  if (hid === true) { hid = new Date().toISOString(); Core.setSetting('hideStrategyHint', hid); }
+  if (hid && !Core.db.transactions.some((t) => !t.deleted && t.type === 'income' && t.source !== 'sheet' && t.createdAt && t.createdAt > hid)) return '';
   const o = Core.strategyOptions();
   if (!o.debts.length && !o.goals.length) return '';
   const d = o.debts.slice().sort((a, b) => b.left - a.left)[0];
