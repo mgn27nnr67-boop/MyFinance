@@ -115,7 +115,7 @@ button.cell:active, .cell.tap:active { background: var(--fill); }
 .cell .val .sub { text-align: right; }
 .cell .chev { width: 8px; height: 13px; flex: none; color: var(--label-3); margin-left: -4px; }
 .cell .detail { color: var(--label-2); }
-.tile { width: 29px; height: 29px; border-radius: 7px; display: grid; place-items: center; font-size: 17px; flex: none; }
+.tile { width: 29px; height: 29px; border-radius: 7px; display: grid; place-items: center; font-size: 17px; flex: none; line-height: 1; text-align: center; }
 .tile.lg { width: 40px; height: 40px; border-radius: 10px; font-size: 22px; }
 
 .badge { font-size: 12px; font-weight: 600; padding: 1px 7px; border-radius: 6px; display: inline-block; letter-spacing: 0; }
@@ -222,7 +222,7 @@ button.cell:active, .cell.tap:active { background: var(--fill); }
 .chip select { position: absolute; inset: 0; opacity: 0; width: 100%; -webkit-appearance: none; appearance: none; }
 .quick { display: flex; gap: 8px; padding: 0 16px 10px; overflow-x: auto; scrollbar-width: none; }
 .quick .chip { background: var(--fill); }
-.cats { flex: 1; overflow-y: auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px 2px; padding: 2px 8px 10px; align-content: start; }
+.cats { flex: 1; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fit, 68px); justify-content: center; gap: 4px 2px; padding: 2px 8px 10px; align-content: start; }
 .cat { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 3px 0; min-width: 0; }
 .cat .tile { width: 44px; height: 44px; border-radius: 12px; font-size: 23px; transition: transform .12s; }
 .cat .n { font-size: 10.5px; line-height: 12px; text-align: center; color: var(--label-2); max-width: 68px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -272,14 +272,14 @@ button.cell:active, .cell.tap:active { background: var(--fill); }
 /* emoji picker */
 .emoji-row { display: flex; gap: 4px; overflow-x: auto; padding: 4px 12px 10px 12px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .emoji-row::-webkit-scrollbar { display: none; }
-.emoji-row button { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; font-size: 22px; line-height: 40px; background: var(--fill); padding: 0; }
+.emoji-row button { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; font-size: 22px; line-height: 1; display: grid; place-items: center; background: var(--fill); padding: 0; }
 .emoji-row button.on { outline: 2px solid var(--tint); }
 details.closed-plans summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; }
 details.closed-plans summary::-webkit-details-marker { display: none; }
 details.closed-plans .chev-d { display: inline-block; transition: transform .2s; }
 details.closed-plans[open] .chev-d { transform: rotate(90deg); }
 
-.tile.big-tile { width: 56px; height: 56px; font-size: 30px; border-radius: 14px; display: inline-flex; }
+.tile.big-tile { width: 56px; height: 56px; font-size: 30px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
 /* фільтри операцій */
 .tx-filters { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 8px; }
 .tx-filters::-webkit-scrollbar { display: none; }
@@ -356,7 +356,11 @@ details.closed-plans[open] .chev-d { transform: rotate(90deg); }
 .kc-prev > svg { flex: none; }
 .kc-tabs { display: flex; gap: 8px; overflow-x: auto; padding: 6px 16px 10px; scrollbar-width: none; }
 .kc-tabs::-webkit-scrollbar { display: none; }
-.kc-tabs { gap: 6px; padding: 6px 12px 10px; }
+.kc-tabs { gap: 6px; padding: 6px 12px 10px; flex: 1; min-width: 0; }
+.kc-bar { position: sticky; top: 0; z-index: 3; display: flex; align-items: center; background: var(--sheet-bg); }
+.kc-mini { flex: none; width: 0; margin-left: 0; overflow: hidden; transition: width .2s, margin .2s; }
+.kc-bar.mini .kc-mini { width: 36px; margin-left: 12px; }
+.kc-bar.mini .kc-tabs { padding-left: 8px; }
 .kc-tabs .chip { line-height: 1; padding: 7px 11px; font-size: 15px; flex: none; }
 .kc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 16px 16px; }
 .kc-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px 8px; border-radius: 14px; background: var(--cell); font-size: 13px; text-align: center; }
@@ -381,6 +385,32 @@ details.closed-plans[open] .chev-d { transform: rotate(90deg); }
 .ach-prev-t b { color: var(--label); }
 .ach-tier { border-radius: 14px; padding: 6px 2px; }
 .ach-tier.sel { background: var(--cell); box-shadow: inset 0 0 0 2px var(--tint); }
+
+/* вибір фону застосунку */
+.th-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 8px; padding: 14px 16px 4px; }
+.th-item { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 13px; color: var(--label); text-align: center; }
+.th-item small { font-size: 11px; color: var(--label-2); line-height: 1.25; }
+.th-sw { width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--sep); display: grid; place-items: center; font-size: 22px; position: relative; }
+.th-sw b { color: var(--tint); }
+.th-sw i { font-style: normal; font-size: 18px; }
+.th-item.on .th-sw { box-shadow: 0 0 0 3px var(--tint); }
+.th-item.locked .th-sw { opacity: .75; }
+.th-item.locked > span:not(.th-sw) { color: var(--label-2); }
+.th-sw.p-night { background-image: url(data:image/png;base64,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) !important; background-size: 34px 34px; }
+.th-sw.p-room { background-image: url(data:image/png;base64,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) !important; background-size: 34px 34px; }
+.th-sw.p-coins { background-image: url(data:image/png;base64,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) !important; background-size: 34px 34px; }
+.ask-cell select { width: 100%; max-width: none !important; text-align: left; font-size: 17px; }
+.rp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 4px 12px 12px 16px; border-bottom: .5px solid var(--sep); }
+.rp-t { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 2px; border-radius: 10px; background: var(--cell-2); }
+.rp-t b { font-size: 20px; }
+.rp-t span { font-size: 11px; color: var(--label-2); text-align: center; line-height: 1.2; }
+.inc-link { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; padding: 10px 16px 0; }
+.inc-link > span { font-size: 14px; color: var(--label-2); margin-right: 2px; }
+.inc-hint { padding: 6px 16px 0; font-size: 12px; color: var(--label-2); text-align: center; }
+.tip-btn { flex: none; width: 36px; height: 36px; border-radius: 18px; display: grid; place-items: center; color: var(--tint); background: color-mix(in srgb, var(--tint) 13%, transparent); }
+.tip-btn svg { width: 19px; height: 19px; }
+.inc-seg { margin: 12px 16px 0; }
+.inc-seg button { height: 32px; font-size: 14px; }
 
 </style>
   <style>
@@ -1679,7 +1709,7 @@ window.SEED = {
   fresh: true,
   settings: { usdRate: 41.5, eurRate: 48, usdRateUpdatedAt: '', defaultAccountId: 'cash', lookbackForIncome: 10000 },
   accounts: [
-    { id: 'cash', name: 'Готівка', type: 'cash', currency: 'UAH', emoji: '💵', color: '#34C759', opening: 0 },
+    { id: 'cash', name: 'Готівка', type: 'cash', currency: 'UAH', emoji: '💸', color: '#34C759', opening: 0 },
   ],
   categories: [
     { id: 'food', name: 'Продукти', emoji: '🛒', color: '#34C759', kind: 'expense', budget: 12000 },
@@ -2616,7 +2646,7 @@ const Cloud = (() => {
 /* Інтерфейс «MyFinance» v2 — нативний iOS-стиль. */
 'use strict';
 
-const APP_VERSION = '3.16.4';
+const APP_VERSION = '3.17.0';
 const MONTHS = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
 const MONTHS_GEN = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'];
 const MONTHS_SHORT = ['січ', 'лют', 'бер', 'кві', 'тра', 'чер', 'лип', 'сер', 'вер', 'жов', 'лис', 'гру'];
@@ -2628,7 +2658,7 @@ const EMO = {
   bill: '🏠 💡 🔥 💧 📶 📱 📺 🎵 ☁️ 🚗 🛡️ 🏋️ 🎓 🐶 💊 🧾 🚇 🅿️',
   income: '💼 💰 🎁 📈 🔁 🏦',
   saving: '🫙 🐷 🎯 🏖️ ✈️ 🚗 🏠 💍 🎓 🛟 📈 🎁 💻',
-  account: '💵 💳 🖤 ❤️ 💚 💛 💙 🤍 🫙 🏦 💲 💶 🪙 📦 📲 🐷',
+  account: '💸 💳 🖤 ❤️ 💚 💛 💙 🤍 🫙 🏦 🪙 📦 📲 🐷',
   goal: '🎯 🫙 🏖️ ✈️ 🚗 🏠 💻 📱 💍 🎓 🛟 🐷 🎁 🛋️ 🎸',
   // по сферах: їжа · транспорт · дім і звʼязок · здоровʼя · покупки · дозвілля · сімʼя · спорт · фінанси
   category: '🛒 🍽️ ☕ 🍔 🍷 🚕 🚇 ⛽ 🚗 🅿️ 🏠 💡 🧾 📱 🌐 💊 🦷 💇 💄 👕 👟 🛍️ 📦 🎉 🎬 🎮 ✈️ 📚 👶 🐶 🎁 🙏 🏋️ 💸 🏦 🚬',
@@ -2679,6 +2709,16 @@ const PL_LABELS = {
   saving: { acc: 'З рахунку', amt: 'Відкладати на місяць', day: 'День', until: 'Відкладати до', flex: 'можна пропустити, не зменшує «безпечно»' },
 };
 function applyPlanLabels(sh, g) { const L = PL_LABELS[g] || PL_LABELS.bill; sh.querySelectorAll('[data-lbl]').forEach((el) => { el.textContent = L[el.dataset.lbl]; }); }
+const CUR_EMOJI = { USD: '💵', EUR: '💶' };
+/** Разова міграція значків: готівка — 💸, валютні рахунки — сталий значок. */
+function fixAccountEmoji() {
+  let ch = false;
+  (Core.db.accounts || []).forEach((a) => {
+    const want = CUR_EMOJI[a.currency] || (a.type === 'cash' && (a.emoji === '💵' || a.emoji === '💲') ? '💸' : null);
+    if (want && a.emoji !== want) { a.emoji = want; ch = true; }
+  });
+  if (ch) { if (Core.db.account) Core.syncState().configDirty = true; Core.save(); }
+}
 function emojiRow(inputId, set) {
   return `<div class="emoji-row" data-for="${inputId}">${set.split(' ').map((e) => `<button type="button">${e}</button>`).join('')}</div>`;
 }
@@ -2754,6 +2794,7 @@ function navbar(title, right = '', left = '') {
 }
 
 function render() {
+  try { fixAccountEmoji(); } catch (e) { /* ignore */ }
   $$('.tab[data-tab]').forEach((b) => b.classList.toggle('on', b.dataset.tab === state.tab));
   const v = { home: viewHome, tx: viewTx, plan: viewPlan, money: viewMoney }[state.tab] || viewHome;
   $('#view').innerHTML = v();
@@ -2792,7 +2833,7 @@ function viewHome() {
         <div><div class="k">Сьогодні витрачено</div><div class="v num">${money(s.spentToday)}</div></div>
       </div>
     </button>` +
-    graceCards() + depositCards() + noSpendCard() + safetyCards() + weeklyCard() +
+    graceCards() + depositCards() + noSpendCard() + safetyCards() + monthCard() + weeklyCard() +
     (po ? planCard(po) : strategyHint()) +
     forecastCard() +
     chart(series, m, mk, po, s) +
@@ -3003,12 +3044,14 @@ function openTxCalendar(mkIn, opts = {}) {
     body.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 20px 4px">
       <button class="tint" data-cal="prev" style="font-size:22px;padding:4px 10px">‹</button><b>${MONTHS[Number(mk.slice(5)) - 1]} ${mk.slice(0, 4)}</b>
       <button class="tint" data-cal="next" style="font-size:22px;padding:4px 10px;${mk >= Core.monthKey(Core.today()) ? 'visibility:hidden' : ''}">›</button></div>
-      ${calendarGrid(mk, 'data-cal="day"')}`;
+      ${calendarGrid(mk, 'data-cal="day"')}
+      <div class="group"><button class="cell icon-cell" data-cal="report">${tile('📊', '#5856D6')}<div class="body"><div class="title">Звіт за ${MONTHS[Number(mk.slice(5)) - 1].toLowerCase()}</div><div class="sub">бюджет, дні, категорії й поради</div></div>${CHEV}</button></div>`;
   };
   body.addEventListener('click', (e) => {
     const b = e.target.closest('[data-cal]'); if (!b) return;
     if (b.dataset.cal === 'prev') mk = Core.addMonths(mk, -1);
     if (b.dataset.cal === 'next') mk = Core.addMonths(mk, 1);
+    if (b.dataset.cal === 'report') { const m = mk; closeSheet(); setTimeout(() => openAnalytics(m), 280); return; }
     if (b.dataset.cal === 'day') {
       const m = mk;
       closeAllSheets();
@@ -3064,7 +3107,8 @@ function viewTx() {
   const seg = [['all', 'Усі'], ['expense', 'Витрати'], ['income', 'Доходи'], ['transfer', 'Перекази']];
   const oneDay = state.txPeriod === 'day' || (state.txPeriod === 'custom' && state.txFrom === state.txTo) ? state.txFrom : null;
   const calBtn = `<button class="nav-btn" data-action="tx-cal" aria-label="Календар"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke-linecap="round"/></svg></button>`;
-  return navbar('Операції', calBtn, backBtn()) +
+  const anBtn = `<button class="nav-btn" data-action="analytics" aria-label="Аналітика"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 20V11M12 20V5M19 20v-6"/></svg></button>`;
+  return navbar('Операції', `<span style="display:flex;gap:2px">${anBtn}${calBtn}</span>`, backBtn()) +
     `<label class="search"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="7" r="5.2"/><path d="m11 11 3.5 3.5" stroke-linecap="round"/></svg><input id="txSearch" placeholder="Пошук" value="${esc(state.txQuery)}" autocomplete="off"></label>
     <div class="seg">${seg.map(([k, l]) => `<button class="${state.txType === k ? 'on' : ''}" data-action="tx-type" data-v="${k}">${l}</button>`).join('')}</div>
     <div class="tx-filters">
@@ -3105,7 +3149,7 @@ function openTxCard(id) {
         <div class="sec" style="margin-top:2px">${esc(v.title)}</div></div>
       <div class="group">
         ${row('Дата', esc(dayLabel(t.date)))}
-        ${t.type === 'transfer' ? row('З рахунку', a ? esc(a.emoji + ' ' + a.name) : '') + row('На рахунок', b ? esc(b.emoji + ' ' + b.name) : '') + (t.toAmount ? row('Отримано', money(t.toAmount, { exact: true, cur: toCur })) : '') : row('Категорія', c ? esc(c.emoji + ' ' + c.name) : '') + row('Рахунок', a ? esc(a.emoji + ' ' + a.name) : '')}
+        ${t.type === 'transfer' ? row('З рахунку', a ? esc(a.emoji + ' ' + a.name) : '') + row('На рахунок', b ? esc(b.emoji + ' ' + b.name) : '') + (t.toAmount ? row('Отримано', money(t.toAmount, { exact: true, cur: toCur })) : '') : row('Категорія', c ? esc(c.emoji + ' ' + c.name) : '') + row('Рахунок', a ? esc(a.emoji + ' ' + a.name) : '<span class="sec">не вказано</span>')}
         ${row('Платіж', p ? esc((p.emoji || '') + ' ' + p.name) : '')}
         ${row('Нотатка', t.note && (!p || t.note !== p.name) ? esc(t.note) : '')}
       </div>
@@ -3499,8 +3543,9 @@ function viewMoney() {
     `<div class="group-title"><span>Цілі</span><button data-action="goal-new">Додати</button></div>
     <div class="group">${goals.map(goalRow).join('') || '<div class="cell"><div class="body sec">Цілей поки немає</div></div>'}</div>
     <div class="group-title"><span>Курс</span></div>
-    <div class="group"><button class="cell" data-action="rate"><div class="body"><div class="title">1 $</div><div class="sub">${esc(s.usdRateSource || 'вручну')} · ${s.usdRateUpdatedAt ? dayLabel(Core.iso(new Date(s.usdRateUpdatedAt))).toLowerCase() : ''}</div></div><div class="val num detail">${money(s.usdRate, { exact: true })}</div>${CHEV}</button>
-      ${accs.some((a) => a.currency === 'EUR') ? `<button class="cell" data-action="rate"><div class="body"><div class="title">1 €</div></div><div class="val num detail">${s.eurRate ? money(s.eurRate, { exact: true }) : '—'}</div>${CHEV}</button>` : ''}</div>`;
+    <div class="group"><div class="cell"><div class="body"><div class="title">1 $</div></div><div class="val num">${money(s.usdRate, { exact: true })}</div></div>
+      <div class="cell"><div class="body"><div class="title">1 €</div></div><div class="val num">${s.eurRate ? money(s.eurRate, { exact: true }) : '—'}</div></div></div>
+    <div class="group-foot">${esc(s.usdRateSource && s.usdRateSource !== 'вручну' ? s.usdRateSource : 'НБУ')} · ${s.usdRateUpdatedAt ? 'оновлено ' + dayLabel(Core.iso(new Date(s.usdRateUpdatedAt))).toLowerCase() : 'оновиться, коли буде інтернет'}. Курс оновлюється автоматично.</div></div>`;
 }
 function accountRow(a) {
   const b = Core.balance(a.id);
@@ -3551,8 +3596,8 @@ function openAccount(id) {
   openSheet({
     title: isNew ? 'Новий рахунок' : a.name, left: { text: 'Скасувати', fn: closeSheet }, right: { text: 'Готово', fn: () => save() },
     body: `<div class="group" style="margin-top:12px">
-        <label class="cell field-cell"><input class="left" id="acEmoji" value="${esc(a.emoji)}" style="max-width:44px;font-size:22px"><input class="left" id="acName" placeholder="Назва" value="${esc(a.name)}"></label>
-        ${emojiRow('acEmoji', EMO.account)}
+        <label class="cell field-cell"><input class="left" id="acEmoji" value="${esc(CUR_EMOJI[a.currency] || a.emoji)}" ${CUR_EMOJI[a.currency] ? 'readonly' : ''} style="max-width:44px;font-size:22px"><input class="left" id="acName" placeholder="Назва" value="${esc(a.name)}"></label>
+        <div id="acEmoRow" ${CUR_EMOJI[a.currency] ? 'hidden' : ''}>${emojiRow('acEmoji', EMO.account)}</div>
       </div>
       <div class="group-title">Рахунок</div>
       <div class="group">
@@ -3608,6 +3653,12 @@ function openAccount(id) {
         $('#acSavHint', sh).hidden = t !== 'savings';
         const cs = $('#acCreditSec', sh); if (cs) cs.hidden = t !== 'credit';
         if (t === 'deposit' && $('#acEmoji', sh).value === '💳') $('#acEmoji', sh).value = '🏦';
+      });
+      // валютні рахунки: сталий значок без вибору ($ — 💵, € — 💶)
+      $('#acCur', sh).addEventListener('change', () => {
+        const c = $('#acCur', sh).value, em = $('#acEmoji', sh);
+        if (CUR_EMOJI[c]) { em.value = CUR_EMOJI[c]; em.readOnly = true; } else { em.readOnly = false; if (Object.values(CUR_EMOJI).includes(em.value)) em.value = '💳'; }
+        $('#acEmoRow', sh).hidden = !!CUR_EMOJI[c];
       });
       const cap = $('#depCap', sh); if (cap) cap.addEventListener('change', () => { $('#depPayToCell', sh).hidden = cap.checked; });
       const bank = $('#depBank', sh);
@@ -3873,6 +3924,12 @@ function openAdd(opts = {}) {
     toAmount: edit ? (edit.toAmount ?? null) : null,
     date: edit ? edit.date : (opts.date || Core.today()),
     note: edit ? edit.note : '',
+    plan: edit ? (edit.type === 'income' ? edit.plannedId || null : undefined) : null, // дохід: зарахувати як плановий (зарплата, аванс) чи позапланово
+  };
+  /** Планові надходження цього місяця, ще не отримані повністю (для вибору «Це: Зарплата / Аванс / Позапланово»). */
+  const incPlans = () => {
+    const mk = Core.monthKey(st.date || Core.today());
+    return Core.monthPlan(mk).filter((x) => x.plan.group === 'income' && !x.plan.archived && (x.status !== 'done' || (edit && edit.plannedId === x.plan.id)) && (!st.cat || !x.plan.categoryId || x.plan.categoryId === st.cat)).sort((a, b) => (/зарплат/i.test(b.plan.name) - /зарплат/i.test(a.plan.name)) || b.amount - a.amount); // «Зарплата» завжди перша
   };
   if (!st.to) st.to = (Core.activeAccounts().find((a) => a.id !== st.acc && Core.isPayAccount(a)) || {}).id;
   if (st.type === 'transfer' && st.acc === st.to) st.acc = (Core.activeAccounts().find((a) => Core.isPayAccount(a) && a.type !== 'credit' && a.id !== st.to) || {}).id;
@@ -3936,7 +3993,10 @@ function openAdd(opts = {}) {
       ${quick.length ? `<div class="quick">${quick.map((q) => `<button class="chip ${q.own ? 'own' : ''}" data-q="${q.cat.id}|${q.amount}|${q.accountId || ''}">${esc(q.cat.emoji)} ${money(q.amount, { exact: true })}</button>`).join('')}</div>` : ''}
       ${st.type === 'transfer'
         ? `<div class="note-box" style="padding:8px 0 0">Переказ між своїми рахунками: погашення кредитки, зняття готівки, купівля доларів. Не рахується як витрата.${acc && Core.account(st.to) && acc.currency !== Core.account(st.to).currency ? `<br><br>Обмін валюти: перевірте, скільки отримали, — кнопка з курсом угорі.` : ''}</div><div style="flex:1"></div>`
-        : `<div class="cats">${cats.map((c) => `<button class="cat ${st.cat === c.id ? 'on' : ''}" data-cat="${c.id}">${catTile(c)}<span class="n">${esc(c.name)}</span></button>`).join('')}</div>`}
+        : `<div class="cats" ${st.type === 'income' && st.cat && incPlans().length ? 'style="flex:none;padding-bottom:0"' : ''}>${cats.map((c) => `<button class="cat ${st.cat === c.id ? 'on' : ''}" data-cat="${c.id}">${catTile(c)}<span class="n">${esc(c.name)}</span></button>`).join('')}</div>
+          ${st.type === 'income' && st.cat && incPlans().length ? `<div class="seg inc-seg">${incPlans().map((x) => `<button class="${st.plan === x.plan.id ? 'on' : ''}" data-plan="${x.plan.id}">${esc(x.plan.name)}</button>`).join('')}<button class="${!st.plan ? 'on' : ''}" data-plan="">Позапланово</button></div>
+          <div class="inc-hint" style="visibility:${st.plan ? 'hidden' : 'visible'}">Премія, додатковий аванс тощо</div><div style="flex:1"></div>` : ''}
+`}
       ${edit ? '<button class="del" data-k="delete">Видалити операцію</button>' : ''}
       <div class="keypad">
         <button data-key="1">1</button><button data-key="2">2</button><button data-key="3">3</button><button class="fn" data-key="back">⌫</button>
@@ -3969,6 +4029,7 @@ function openAdd(opts = {}) {
       data.toAmount = a.currency === b.currency ? null : (st.toAmount ?? autoTo());
     } else { data.categoryId = st.cat; data.toAccountId = null; data.toAmount = null; }
     if (!edit && opts.plannedId && st.type === 'transfer') { data.plannedId = opts.plannedId; data.planMonth = opts.planMonth; }
+    if (st.type === 'income' && st.plan !== undefined) { data.plannedId = st.plan || null; data.planMonth = st.plan ? Core.monthKey(st.date) : null; }
     if (edit) {
       if (edit.inBalance === false && st.acc) data.inBalance = edit.inBalance; // старі імпортовані операції не чіпають залишки
       Core.updateTransaction(edit.id, data);
@@ -3987,7 +4048,14 @@ function openAdd(opts = {}) {
     if (!b) return;
     if (b.dataset.key) return press(b.dataset.key);
     if (b.dataset.type) { st.type = b.dataset.type; st.cat = null; if (st.type !== 'transfer' && !Core.isPayAccount(Core.account(st.acc))) st.acc = defaultPayAccount(); return draw(); }
-    if (b.dataset.cat) { st.cat = b.dataset.cat; return draw(); }
+    if (b.dataset.cat) { st.cat = b.dataset.cat; if (st.plan && !incPlans().some((x) => x.plan.id === st.plan)) st.plan = null; return draw(); }
+    if (b.dataset.plan !== undefined) {
+      st.plan = b.dataset.plan || null;
+      const x = st.plan && incPlans().find((i) => i.plan.id === st.plan);
+      if (x && !value()) st.expr = String(Core.round2(x.amount - (x.paid || 0))).replace('.', ',');
+      if (x && x.plan.accountId && Core.account(x.plan.accountId)) st.acc = x.plan.accountId;
+      return draw();
+    }
     if (b.dataset.date) { st.date = b.dataset.date; return draw(); }
     if (b.dataset.q) { const [c, a, acc] = b.dataset.q.split('|'); st.cat = c; st.expr = String(a).replace('.', ','); if (acc && Core.account(acc) && !Core.account(acc).archived) st.acc = acc; return draw(); }
     const k = b.dataset.k;
@@ -4192,6 +4260,8 @@ document.addEventListener('click', (e) => {
     case 'forecast': openForecast(); break;
     case 'hint-off': Core.setSetting('hideStrategyHint', new Date().toISOString()); toast('Підказка повернеться з наступним надходженням. План — у ⚙︎ → «План: ліміт на день»'); render(); break;
     case 'week-open': openAnalytics(null, { weeks: true }); break;
+    case 'month-open': openAnalytics(Core.addMonths(Core.monthKey(Core.today()), -1)); break;
+    case 'month-seen': Core.setSetting('monthSeen', Core.addMonths(Core.monthKey(Core.today()), -1)); render(); break;
     case 'nospend-hide': Core.setSetting('noSpendHidden', Core.today()); render(); break;
     case 'nospend-ask': {
       const d = Core.today();
@@ -4553,7 +4623,7 @@ function openAccountSheet() {
 
 /* ───────── Майстер профілю ───────── */
 const BANKS = [
-  ['Готівка', '💵', '#34C759', 'cash'], ['Монобанк', '🖤', '#1C1C1E', 'card'], ['ПриватБанк', '💚', '#34C759', 'card'], ['ПУМБ', '❤️', '#FF2D55', 'card'],
+  ['Готівка', '💸', '#34C759', 'cash'], ['Монобанк', '🖤', '#1C1C1E', 'card'], ['ПриватБанк', '💚', '#34C759', 'card'], ['ПУМБ', '❤️', '#FF2D55', 'card'],
   ['Ощадбанк', '🏦', '#30B0C7', 'card'], ['А-Банк', '💛', '#FFCC00', 'card'], ['Sense Bank', '💜', '#AF52DE', 'card'], ['Райффайзен', '💛', '#FFCC00', 'card'], ['Інший', '💳', '#007AFF', 'card'],
 ];
 const BILLS = [['Оренда / іпотека', '🏠'], ['Комунальні послуги', '💡'], ['Мобільний звʼязок', '📱'], ['Інтернет', '🌐'], ['Підписки (YouTube, Netflix…)', '📺'], ['Спортзал', '🏋️'], ['Страхування', '🛡️']];
@@ -4562,7 +4632,7 @@ const BUDGET_SHARE = { food: 0.2, cafe: 0.05, taxi: 0.05, home: 0.03, fun: 0.03,
 function openWizard() {
   const w = {
     step: 0,
-    accounts: [{ name: 'Готівка', emoji: '💵', color: '#34C759', type: 'cash', balance: '', credit: false, limit: '', debt: '' }],
+    accounts: [{ name: 'Готівка', emoji: '💸', color: '#34C759', type: 'cash', balance: '', credit: false, limit: '', debt: '' }],
     quick: [], salary: '', salaryDay: '', advance: '', advanceDay: '', irregular: false, incomeAcc: 0,
     bills: BILLS.map(([n, e]) => ({ name: n, emoji: e, on: false, amount: '', day: '', acc: '' })),
     loans: [], usd: '', savings: '',
@@ -4700,7 +4770,7 @@ function openWizard() {
       accounts.push(acc);
       if (num(l.monthly)) planned.push({ id: uid(), name: l.name.trim(), emoji: '📲', group: 'debt', amount: num(l.monthly), day: parseInt(l.day, 10) || null, toAccountId: acc.id, accountId: accAt('').id });
     });
-    if (num(w.usd)) accounts.push({ id: uid(), name: 'Долари', emoji: '💲', color: '#30B0C7', currency: 'USD', type: 'savings', archived: false, opening: num(w.usd) });
+    if (num(w.usd)) accounts.push({ id: uid(), name: 'Долари', emoji: '💵', color: '#30B0C7', currency: 'USD', type: 'savings', archived: false, opening: num(w.usd) });
     if (num(w.savings)) accounts.push({ id: uid(), name: 'Заощадження', emoji: '🏦', color: '#AF52DE', currency: 'UAH', type: 'savings', archived: false, opening: num(w.savings) });
     const goals = [];
     if (w.goal.name.trim() && num(w.goal.target)) {
@@ -4988,6 +5058,9 @@ function openAnalytics(mkIn, opts = {}) {
     const b = e.target.closest('[data-an]'); if (!b) return;
     if (b.dataset.an === 'prev') mk = Core.addMonths(mk, -1);
     if (b.dataset.an === 'next') mk = Core.addMonths(mk, 1);
+    if (b.dataset.an === 'tip-budget') { const c = Core.category(b.dataset.id); Core.update('categories', b.dataset.id, { budget: +b.dataset.v }); toast(`Ліміт «${c.name}»: ${money(+b.dataset.v)}`); }
+    if (b.dataset.an === 'tip-hide') { const c = Core.category(b.dataset.id); Core.update('categories', b.dataset.id, { archived: true }); toast(`«${c.name}» сховано`); }
+    if (b.dataset.an === 'strategy') { closeSheet(); setTimeout(() => openStrategy(), 280); return; }
     if (b.dataset.an === 'cat' || b.dataset.an === 'day') {
       const y = wrap.querySelector('.s-body').scrollTop, m = mk;
       closeAllSheets();
@@ -5063,11 +5136,13 @@ function analyticsHTML(mk) {
   </div>`;
 
   // категорії з порівнянням
+  const cnt = {}; Core.db.transactions.forEach((t) => { if (isDailyTx(t) && Core.monthKey(t.date) === mk) cnt[t.categoryId] = (cnt[t.categoryId] || 0) + 1; });
   const rows = cats.map((c) => {
     const o = old.cats.find((x) => x.cat.id === c.cat.id);
     const was = o ? o.spent : 0;
     const ch = was ? (c.spent - was) / was : null;
-    return `<button class="cell icon-cell" data-an="cat" data-id="${c.cat.id}">${catTile(c.cat)}<div class="body"><div class="title">${esc(c.cat.name)}</div><div class="progress"><i style="width:${(c.spent / (cats[0].spent || 1)) * 100}%;background:${c.cat.color}"></i></div></div>
+    const n = cnt[c.cat.id] || 0;
+    return `<button class="cell icon-cell" data-an="cat" data-id="${c.cat.id}">${catTile(c.cat)}<div class="body"><div class="title">${esc(c.cat.name)}</div><div class="sub">${Math.round((c.spent / (total || 1)) * 100)}% · ${n} ${plural(n, 'операція', 'операції', 'операцій')}${c.budget ? ` · ліміт ${money(c.budget)}` : ''}</div><div class="progress"><i style="width:${(c.spent / (cats[0].spent || 1)) * 100}%;background:${c.cat.color}"></i></div></div>
       <div class="val num">${money(c.spent)}${prev >= start ? `<div class="sub ${ch === null ? '' : ch > 0.05 ? 'neg' : ch < -0.05 ? 'pos' : ''}">${ch === null ? 'нова' : pct(ch)}</div>` : ''}</div></button>`;
   }).join('');
 
@@ -5102,12 +5177,101 @@ function analyticsHTML(mk) {
   return `<div class="month-nav" style="margin-top:6px"><button data-an="prev" ${mk <= start ? 'disabled' : ''}>‹</button><span>${monthTitle(mk)}</span><button data-an="next" ${mk >= nowMk ? 'disabled' : ''}>›</button></div>
     ${change !== null && prev >= start ? `<div class="group-foot" style="text-align:center;padding-top:0">Щоденні витрати <b class="${change > 0 ? 'neg' : 'pos'}">${pct(change)}</b> до ${MONTHS_GEN[Number(prev.slice(5)) - 1]}</div>` : ''}
     ${donut}
+    ${monthReportHTML(mk)}
     ${rows ? `<div class="group-title">Категорії${prev >= start ? ' · зміна до минулого місяця' : ''}</div><div class="group">${rows}</div>` : ''}
     <div class="group-title">Календар витрат</div>${calendar}
     <div class="group-title">Середні витрати за днями тижня</div>${weekBars}
     ${months.length > 1 ? `<div class="group-title">Доходи і витрати</div>${incOut}` : ''}
     ${weeksSection()}
     ${top.length ? `<div class="group-title">Найбільші витрати</div><div class="group">${top.map(txRow).join('')}</div>` : ''}`;
+}
+
+/* ───────── Звіт за місяць і поради ───────── */
+function monthStats(mk) {
+  const cur = Core.monthSummary(mk), old = Core.monthSummary(Core.addMonths(mk, -1));
+  const lim0 = currentDailyLimit() || (cur.budgetTotal ? cur.budgetTotal / Core.daysInMonth(mk) : 0);
+  const rec = recordDays(), series = Core.dailySeries(mk);
+  const d = { ok: 0, over: 0, zero: 0, empty: 0 };
+  let maxDay = null, minDay = null;
+  series.forEach((v, i) => {
+    const day = mk + '-' + String(i + 1).padStart(2, '0');
+    if (day > Core.today() || day < Core.trackingStart() + '-01') return;
+    if (v > 0) {
+      const lim = limitOn(day, lim0);
+      if (lim && Core.round2(v) > Core.round2(lim)) d.over++; else d.ok++;
+      if (!maxDay || v > maxDay.v) maxDay = { day, v };
+      if (!minDay || v < minDay.v) minDay = { day, v };
+    } else if (rec.has(day)) d.zero++; else d.empty++;
+  });
+  let saved = 0, debt = 0;
+  Core.db.transactions.forEach((t) => {
+    if (t.deleted || t.type !== 'transfer' || Core.monthKey(t.date) !== mk) return;
+    const to = Core.account(t.toAccountId) || {}, from = Core.account(t.accountId) || {}, p = Core.plan(t.plannedId) || {};
+    if (from.type === 'savings' || from.type === 'deposit') return;
+    if (to.type === 'savings' || to.type === 'deposit' || p.group === 'saving') saved += Core.toUAH(t.amount, from.currency || 'UAH');
+    else if (to.type === 'loan' || to.type === 'credit' || p.group === 'debt') debt += t.amount;
+  });
+  const counts = {};
+  Core.db.transactions.forEach((t) => { if (isDailyTx(t) && Core.monthKey(t.date) === mk) counts[t.categoryId] = (counts[t.categoryId] || 0) + 1; });
+  return { cur, old, d, maxDay, minDay, saved: Core.round2(saved), debt: Core.round2(debt), counts };
+}
+/** Поради за місяць: до трьох, від найкориснішої. */
+function monthTips(mk) {
+  const tips = [];
+  const prev = Core.addMonths(mk, -1), prev2 = Core.addMonths(mk, -2), start = Core.trackingStart();
+  const S = Core.monthSummary(mk), P = prev >= start ? Core.monthSummary(prev) : null;
+  const up100 = (x) => Math.ceil(x / 100) * 100;
+  S.cats.forEach((c) => {
+    if (!c.budget) return;
+    const p = P && P.cats.find((x) => x.cat.id === c.cat.id);
+    if (c.spent > c.budget && p && p.spent > p.budget) tips.push({ w: 3, icon: '📈', cat: c.cat, text: `«${c.cat.name}» другий місяць понад ліміт (${money(c.spent)} з ${money(c.budget)}). Підняти ліміт до ${money(up100((c.spent + p.spent) / 2))}?`, act: 'tip-budget', val: up100((c.spent + p.spent) / 2), btn: 'Підняти ліміт', ico: 'up' });
+    else if (mk < Core.monthKey(Core.today()) && c.spent < c.budget * 0.6) tips.push({ w: 2, icon: '✂️', cat: c.cat, text: `«${c.cat.name}»: витрачено лише ${money(c.spent)} з ${money(c.budget)}. Можна знизити ліміт до ${money(up100(Math.max(c.spent, c.budget * 0.7)))} і відкладати різницю.`, act: 'tip-budget', val: up100(Math.max(c.spent, c.budget * 0.7)), btn: 'Знизити ліміт', ico: 'down' });
+  });
+  if (prev2 >= start) {
+    const zero = (mmk) => Core.monthSummary(mmk).cats.filter((c) => !c.spent && !c.budget).map((c) => c.cat.id);
+    const z0 = zero(mk), z1 = new Set(zero(prev)), z2 = new Set(zero(prev2));
+    z0.filter((id) => z1.has(id) && z2.has(id)).slice(0, 1).forEach((id) => { const c = Core.category(id); tips.push({ w: 1, icon: '🗂️', cat: c, text: `На «${c.name}» нічого не витрачали 3 місяці. Сховати категорію?`, act: 'tip-hide', btn: 'Сховати', ico: 'hide' }); });
+  }
+  const left = S.income - S.daily - S.planned;
+  if (mk < Core.monthKey(Core.today()) && S.income > 0 && left > 500 && (Core.db.goals || []).some((g) => !g.archived)) tips.push({ w: 2.5, icon: '🎯', text: `Місяць закрито в плюсі на ${money(left)}. Відкласти частину на ціль?`, act: 'strategy', btn: 'Відкласти', ico: 'go' });
+  return tips.sort((a, b) => b.w - a.w).slice(0, 3);
+}
+const TIP_ICON = {
+  up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>',
+  down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>',
+  hide: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6Z"/><circle cx="12" cy="12" r="2.5"/><path d="M4 20 20 4"/></svg>',
+  go: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+};
+function tipsHTML(tips) {
+  return tips.map((t) => `<div class="cell icon-cell">${t.cat ? catTile(t.cat) : tile(t.icon, '#5856D6')}<div class="body"><div class="sub" style="color:var(--label);font-size:14px;white-space:normal">${esc(t.text)}</div></div>${t.btn ? `<button class="tip-btn" data-an="${t.act}" data-id="${t.cat ? t.cat.id : ''}" data-v="${t.val || ''}" aria-label="${t.btn}">${TIP_ICON[t.ico] || TIP_ICON.go}</button>` : ''}</div>`).join('');
+}
+const MONTHS_LOC_SHORT = (m) => ['січні', 'лютому', 'березні', 'квітні', 'травні', 'червні', 'липні', 'серпні', 'вересні', 'жовтні', 'листопаді', 'грудні'][Number(m.slice(5)) - 1];
+function monthReportHTML(mk) {
+  const m = monthStats(mk), { cur, old, d } = m;
+  const past = mk < Core.monthKey(Core.today());
+  const bud = cur.budgetTotal;
+  const diff = old.daily ? cur.daily - old.daily : null;
+  const tileS = (n, l, c) => `<div class="rp-t"><b class="num" style="color:${c}">${n}</b><span>${l}</span></div>`;
+  const tips = monthTips(mk);
+  const days = d.ok + d.over + d.zero; // дні, в які щось вносили
+  const avgDay = days ? Core.round2(cur.daily / days) : 0;
+  const prevMk = Core.addMonths(mk, -1), om = old.daily ? monthStats(prevMk).d : null;
+  const oldAvg = om && om.ok + om.over + om.zero ? Core.round2(old.daily / (om.ok + om.over + om.zero)) : 0;
+  return `<div class="group-title">${past ? 'Підсумок місяця' : 'Місяць зараз'}</div>
+    <div class="group">
+      <div class="cell"><div class="body"><div class="title">Витрачено щоденно</div>${bud ? `<div class="progress" style="margin-top:6px"><i style="width:${Math.min(100, (cur.daily / bud) * 100)}%;background:${cur.daily > bud ? 'var(--red)' : 'var(--green)'}"></i></div><div class="sub">з бюджету ${money(bud)} · ${cur.daily > bud ? 'перевищено на ' + money(cur.daily - bud) : 'лишилось ' + money(bud - cur.daily)}</div>` : ''}${avgDay ? `<div class="sub">у середньому ${money(avgDay)} на день${old.daily && oldAvg ? ` · у ${MONTHS_LOC_SHORT(prevMk)} ${money(oldAvg)}` : ''}</div>` : ''}</div><div class="val num">${money(cur.daily)}${diff !== null ? `<div class="sub ${diff > 0 ? 'neg' : 'pos'}">${diff > 0 ? '+' : '−'}${money(Math.abs(diff))}</div>` : ''}</div></div>
+      <div class="rp-grid">${tileS(d.ok, 'у межах ліміту', 'var(--green)')}${tileS(d.over, 'понад ліміт', 'var(--orange)')}${tileS(d.zero, 'без витрат', 'var(--label-2)')}${tileS(d.empty, 'не внесено', 'var(--label-3)')}</div>
+      ${m.maxDay ? `<button class="cell" data-an="day" data-id="${m.maxDay.day}"><div class="body"><div class="title">Найдорожчий день</div><div class="sub">${esc(dayLabel(m.maxDay.day))}</div></div><div class="val num">${money(m.maxDay.v)}</div>${CHEV}</button>` : ''}
+      ${m.saved || m.debt ? `<div class="cell"><div class="body"><div class="title">Відкладено й погашено</div><div class="sub">${[m.saved ? 'на цілі й заощадження ' + money(m.saved) : '', m.debt ? 'борги ' + money(m.debt) : ''].filter(Boolean).join(' · ')}</div></div><div class="val num pos">${money(m.saved + m.debt)}</div></div>` : ''}
+    </div>
+    ${tips.length ? `<div class="group-title">Поради</div><div class="group">${tipsHTML(tips)}</div>` : ''}`;
+}
+/** Картка на головній у перший тиждень місяця: підсумки минулого. */
+function monthCard() {
+  const t = Core.today(), mk = Core.addMonths(Core.monthKey(t), -1);
+  if (Number(t.slice(8)) > 7 || mk < Core.trackingStart() || Core.db.settings.monthSeen === mk) return '';
+  if (!Core.monthSummary(mk).daily) return '';
+  return `<div class="group" style="margin:10px 16px 0"><div class="cell icon-cell">${tile('🗓️', '#FF9500')}<button class="body" data-action="month-open" style="text-align:left;display:flex;align-items:center;gap:6px"><div class="title" style="flex:1">Підсумки ${MONTHS_GEN[Number(mk.slice(5)) - 1]} ✨</div>${CHEV}</button><button class="tint" data-action="month-seen" style="font-size:18px;padding:6px">✕</button></div></div>`;
 }
 
 function weekRange(mon) {
@@ -5577,7 +5741,7 @@ const Art = (() => {
     return `<svg viewBox="0 0 200 200" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block">
       <clipPath id="${c}"><circle cx="100" cy="100" r="96"/></clipPath>
       <circle cx="100" cy="100" r="96" fill="${bg.fill || C.cream}"/>
-      <g clip-path="url(#${c})">${bgArt(bg, 4, 4, 192)}${bg.svg ? bg.svg() : ''}<g transform="${o.head !== 'none' ? 'translate(33.8 35.9) scale(.72)' : 'translate(31.8 32) scale(.74)'}">${cat(o)}</g></g>
+      <g clip-path="url(#${c})">${bgArt(bg, 4, 4, 192)}${bg.svg ? bg.svg() : ''}<g transform="translate(33.8 35.9) scale(.72)">${cat(o)}</g></g>
       <circle cx="100" cy="100" r="96" fill="none" stroke="${ring || 'rgba(23,71,58,.18)'}" stroke-width="${ring ? 8 : 3}"/>
     </svg>`;
   }
@@ -5602,7 +5766,7 @@ const Art = (() => {
       <circle cx="100" cy="96" r="92" fill="none" stroke="${ring.c}" stroke-width="3"/>
       <clipPath id="${g}c"><circle cx="100" cy="96" r="76"/></clipPath>
       <circle cx="100" cy="96" r="76" fill="${locked ? '#F1ECE2' : (bg && bg.fill) || C.cream}"/>
-      <g clip-path="url(#${g}c)">${!locked && bg ? bgArt(bg, 24, 20, 152) : ''}${!locked && bg && bg.svg ? `<g transform="translate(24 20) scale(.76)">${bg.svg()}</g>` : ''}<g transform="${Art_hat(outfit) ? 'translate(42 45.5) scale(.63)' : 'translate(38.3 38) scale(.67)'}">${cat(outfit, { gray: locked })}</g></g>
+      <g clip-path="url(#${g}c)">${!locked && bg ? bgArt(bg, 24, 20, 152) : ''}${!locked && bg && bg.svg ? `<g transform="translate(24 20) scale(.76)">${bg.svg()}</g>` : ''}<g transform="translate(42 45.5) scale(.63)">${cat(outfit, { gray: locked })}</g></g>
       <circle cx="100" cy="96" r="76" fill="none" stroke="${ring.c}" stroke-width="2"/>
       ${pill}${stars}
     </svg>`;
@@ -5662,6 +5826,7 @@ function pastMonths() {
 const byThresholds = (v, tiers) => tiers.filter((x) => v >= x).length;
 
 /* ───────── Досягнення ───────── */
+const ASKEZA_CATS = ['cafe', 'fun', 'clothes']; // лише стандартні категорії, на яких можна зекономити
 const SEED_CAT_IDS = new Set(((window.SEED || {}).categories || []).map((c) => c.id).concat(['lunch']));
 const daysBetween = (a, b) => Math.round((new Date(b + 'T12:00:00') - new Date(a + 'T12:00:00')) / 864e5);
 const uahWord = (n) => `${new Intl.NumberFormat('uk-UA').format(n)} ₴`;
@@ -5758,12 +5923,12 @@ const ACHIEVEMENTS = [
     },
   },
   {
-    id: 'askeza', name: 'Аскеза', desc: 'Оберіть категорію і не витрачайте на неї днів поспіль. Зміна категорії починає серію заново',
+    id: 'askeza', name: 'Аскеза', desc: 'Оберіть кафе та доставку, розваги чи одяг і не витрачайте на цю категорію днів поспіль',
     tiers: [7, 21, 60], unit: daysWord,
     rewards: { 1: [], 2: [item('eyes', 'happy')], 3: [] },
     stats() {
       const st = Core.db.settings.askeza;
-      if (!st || !Core.category(st.cat)) return { cur: 0, best: 0, tier: 0, sub: 'оберіть категорію' };
+      if (!st || !Core.category(st.cat) || !ASKEZA_CATS.includes(st.cat)) return { cur: 0, best: 0, tier: 0, sub: 'оберіть категорію' };
       const last = liveTx().filter((t) => t.type === 'expense' && t.categoryId === st.cat && t.date <= Core.today()).map((t) => t.date).sort().pop();
       const start = [st.since, last ? Core.addDays(last, 1) : st.since].sort().pop();
       const cur = Math.max(0, daysBetween(start, Core.today()));
@@ -5910,12 +6075,8 @@ function openProfile() {
     <div class="group">${onbRow(sts)}${sts.filter(([a]) => !a.single).map(row).join('')}</div>
     <div class="group-title">Особливі</div>
     <div class="group">${sts.filter(([a]) => a.single && !a.onb).map(row).join('')}</div>
-    <div class="group-title">Фон застосунку</div>
-    <div class="group">${Object.entries(THEMES).map(([k, t]) => {
-      const ok = themes.has(k);
-      return `<button class="cell icon-cell" data-p="theme" data-id="${k}" ${ok ? '' : 'data-locked="1"'}><span class="swatch" style="background:${t.color}"></span>
-        <div class="body"><div class="title ${ok ? '' : 'sec'}">${t.name}</div>${ok ? '' : `<div class="sub">🔒 ${t.bg && itemSource('bg', t.bg) ? 'відкривається за ' + itemSource('bg', t.bg) : 'скоро — за нові досягнення'}</div>`}</div>${theme === k ? '<span class="tint" style="font-size:20px">✓</span>' : ''}</button>`;
-    }).join('')}</div>
+    <div class="group-title">Оформлення</div>
+    <div class="group"><button class="cell icon-cell" data-p="themes"><span class="swatch" style="background:${THEMES[theme].color}"></span><div class="body"><div class="title">Фон застосунку</div><div class="sub">${esc(THEMES[theme].name)} · відкрито ${themes.size} з ${Object.keys(THEMES).length}</div></div>${CHEV}</button></div>
     <div class="group-foot">У темному режимі iPhone застосунок лишається темним.</div>
     ${accountGroup()}
     ${Core.db.account ? '<div class="group" style="margin-top:20px"><button class="cell btn-cell danger" id="pfOut">Вийти з акаунта</button></div>' : ''}`;
@@ -5934,15 +6095,16 @@ function openProfile() {
         if (k === 'cat') openCatBuilder(redraw);
         if (k === 'ach') openAchievement(b.dataset.id);
         if (k === 'onb') openOnboarding();
-        if (k === 'theme') {
-          if (b.dataset.locked) { const t = THEMES[b.dataset.id]; return toast(t.bg && itemSource('bg', t.bg) ? 'Відкриється за ' + itemSource('bg', t.bg) : 'Зʼявиться з новими досягненнями'); }
-          setTheme(b.dataset.id); redraw();
-        }
+        if (k === 'themes') openThemes(redraw);
       });
     },
   });
 }
 
+function kcMini(root) {
+  const sb = root.closest('.s-body'), pv = $('.kc-prev', root), bar = $('.kc-bar', root);
+  if (sb && pv && bar) bar.classList.toggle('mini', sb.scrollTop > pv.offsetTop + pv.offsetHeight - 70);
+}
 /** Конструктор котика: шари, вибір речей, закриті з підказкою. */
 function openCatBuilder(done, startLayer = 'head', tryIt = null) {
   let trying = tryIt; // примірка закритої речі: { layer, key }
@@ -5953,26 +6115,30 @@ function openCatBuilder(done, startLayer = 'head', tryIt = null) {
     const shown = trying ? { ...o, [trying.layer]: trying.key } : o;
     const tSrc = trying && itemSource(trying.layer, trying.key);
     root.innerHTML = `<div class="kc-prev">${Art.avatar(shown, 150)}${trying ? `<div class="kc-try">👀 Примірка: <b>${esc(Art.ITEMS[trying.layer][trying.key].name)}</b><br><span>${tSrc ? 'відкриється за ' + esc(tSrc) : 'зʼявиться з новими досягненнями'}</span>${tSrc ? '<button class="tint" data-howto="1">Як отримати ›</button>' : ''}</div>` : '<div class="kc-try"><span>Натисніть на закриту річ 🔒, щоб приміряти</span></div>'}</div>
-      <div class="kc-tabs">${Art.LAYERS.map(([k, n]) => `<button class="chip ${k === layer ? 'on' : ''}" data-l="${k}">${n}</button>`).join('')}</div>
+      <div class="kc-bar"><span class="kc-mini">${Art.avatar(shown, 36)}</span><div class="kc-tabs">${Art.LAYERS.map(([k, n]) => `<button class="chip ${k === layer ? 'on' : ''}" data-l="${k}">${n}</button>`).join('')}</div></div>
       <div class="kc-grid">${Object.entries(Art.ITEMS[layer]).map(([k, it]) => {
         const ok = un[layer].has(k);
         const srcN = itemSource(layer, k).replace(/^бронзу /, 'бронза ');
         const how = FREE[layer].includes(k) ? 'доступно одразу' : (srcN ? (ok ? '✓ ' : '🔒 ') + srcN : '🔒 скоро');
         return `<button class="kc-item ${o[layer] === k ? 'on' : ''} ${ok ? '' : 'locked'} ${trying && trying.layer === layer && trying.key === k ? 'trying' : ''}" data-k="${k}"><span class="kc-av">${Art.avatar({ ...o, [layer]: k }, 78)}${ok ? '' : '<i class="kc-lock">🔒</i>'}</span><span>${esc(it.name)}</span><small>${esc(how)}</small></button>`;
       }).join('')}</div>`;
+    kcMini(root);
   };
   openSheet({
     title: 'Мій котик', left: null, right: { text: 'Готово', fn: () => { closeSheet(); render(); if (done) done(); } },
     body: '<div id="kcRoot"></div>',
     onMount(sh) {
       const root = $('#kcRoot', sh);
+      const sb = sh.querySelector('.s-body');
+      // маленька аватарка в закріпленому рядку вкладок, коли велика прокручена вгору
+      sb.addEventListener('scroll', () => kcMini(root), { passive: true });
       draw(root);
       root.addEventListener('click', (e) => {
-        if (e.target.closest('[data-howto]')) { const id = achOf(trying.layer, trying.key); if (id) openAchievement(id); return; }
+        if (e.target.closest('[data-howto]')) { const r = achOf(trying.layer, trying.key); if (r) openAchievement(r.id, r.tier); return; }
         const t = e.target.closest('[data-l]');
         if (t) { layer = t.dataset.l; trying = null; draw(root); return; }
         const b = e.target.closest('[data-k]'); if (!b) return;
-        if (b.classList.contains('locked')) { trying = trying && trying.key === b.dataset.k && trying.layer === layer ? null : { layer, key: b.dataset.k }; draw(root); root.closest('.s-body').scrollTo({ top: 0, behavior: 'smooth' }); return; }
+        if (b.classList.contains('locked')) { trying = trying && trying.key === b.dataset.k && trying.layer === layer ? null : { layer, key: b.dataset.k }; draw(root); return; }
         trying = null;
         setOutfit({ [layer]: b.dataset.k });
         if (layer === 'bg' && Object.values(THEMES).some((x) => x.bg === b.dataset.k)) {
@@ -5987,14 +6153,14 @@ function openCatBuilder(done, startLayer = 'head', tryIt = null) {
 
 /** Яке досягнення дає річ. */
 function achOf(layer, key) {
-  const a = ACHIEVEMENTS.find((x) => Object.values(x.rewards).some((rs) => rs.some((r) => r.layer === layer && r.key === key)));
-  return a ? a.id : null;
+  for (const a of ACHIEVEMENTS) for (const [t, rs] of Object.entries(a.rewards)) if (rs.some((r) => r.layer === layer && r.key === key)) return { id: a.id, tier: +t };
+  return null;
 }
-function openAchievement(id) {
+function openAchievement(id, tierIn) {
   const a = ACHIEVEMENTS.find((x) => x.id === id);
   const s = achState(a);
   const tiers = a.single ? [1] : [1, 2, 3];
-  let sel = a.single ? 1 : Math.min(3, (s.tier || 0) + 1); // за замовчуванням — наступний рівень
+  let sel = a.single ? 1 : tierIn || Math.min(3, (s.tier || 0) + 1); // за замовчуванням — наступний рівень (або той, за який дають річ)
   const prev = (t) => {
     const got = s.tier >= t;
     const rs = (a.rewards[t] || []).filter((r) => r.type === 'item');
@@ -6011,7 +6177,8 @@ function openAchievement(id) {
     title: a.name, auto: true, left: null, right: { text: 'Готово', fn: closeSheet },
     body: `<div class="sec" style="text-align:center;padding:4px 24px 0;font-size:15px">${esc(a.desc)}</div>
       <div id="achPrev">${prev(sel)}</div><div id="achTiers">${tiersHTML()}</div>
-      ${a.id === 'askeza' ? `<div class="group"><label class="cell field-cell"><div class="body"><div class="title">Категорія</div></div><select id="askCat"><option value="">не обрано</option>${Core.expenseCategories().map((c) => `<option value="${c.id}" ${(Core.db.settings.askeza || {}).cat === c.id ? 'selected' : ''}>${esc(c.emoji + ' ' + c.name)}</option>`).join('')}</select></label></div>` : ''}
+      ${a.id === 'askeza' ? (() => { const st = Core.db.settings.askeza || {}; return `<div class="group-title">Категорія</div><div class="group"><label class="cell field-cell ask-cell"><select id="askCat"><option value="">Оберіть категорію…</option>${ASKEZA_CATS.map((id) => Core.category(id)).filter((c) => c && !c.archived).map((c) => `<option value="${c.id}" ${st.cat === c.id ? 'selected' : ''}>${esc(c.emoji + ' ' + c.name)}</option>`).join('')}</select></label></div>
+      <div class="group-foot">${s.cur ? `⚠️ Зміна категорії обнулить серію (зараз ${daysWord(s.cur)}).` : 'Можна обрати лише категорію, на якій реально зекономити.'}</div>`; })() : ''}
       ${a.single ? '' : `<div class="group">
         <div class="cell"><div class="body"><div class="title">${s.streak ? 'Поточна серія' : 'Зараз'}</div>${s.streak && !s.today && s.cur && a.id === 'chronicler' ? '<div class="sub">внесіть сьогодні хоча б одну операцію, щоб не обірвати</div>' : ''}</div><div class="val num">${s.sub && !s.streak ? esc(s.sub) : a.unit(s.cur || 0)}</div></div>
         ${s.streak ? `<div class="cell"><div class="body"><div class="title">Найкраща серія</div></div><div class="val num detail">${a.unit(s.best || 0)}</div></div>` : ''}
@@ -6021,7 +6188,7 @@ function openAchievement(id) {
       const ac = $('#askCat', sh);
       if (ac) ac.onchange = () => {
         const cur = Core.db.settings.askeza;
-        if (cur && cur.cat && !confirm('Змінити категорію? Серія почнеться заново.')) { ac.value = cur.cat; return; }
+        if (cur && cur.cat && s.cur && !confirm(`Обнулити серію? Зараз ${daysWord(s.cur)} — з новою категорією рахунок почнеться з нуля.`)) { ac.value = cur.cat; return; }
         Core.setSetting('askeza', ac.value ? { cat: ac.value, since: Core.today() } : null);
         closeSheet(); openAchievement('askeza');
       };
@@ -6085,6 +6252,28 @@ function celebrate(a, tier, from) {
 }
 
 /* ───────── Теми ───────── */
+/** Окреме вікно вибору фону застосунку: сітка кружечків, закриті — з 🔒 і підказкою. */
+function openThemes(done) {
+  const html = () => {
+    const cur = currentTheme(), un = unlockedThemes();
+    return `<div class="th-grid">${Object.entries(THEMES).map(([k, t]) => {
+      const ok = un.has(k), src = t.bg && itemSource('bg', t.bg);
+      return `<button class="th-item ${cur === k ? 'on' : ''} ${ok ? '' : 'locked'}" data-th="${k}"><span class="th-sw p-${k}" style="background-color:${t.color}">${cur === k ? '<b>✓</b>' : ok ? '' : '<i>🔒</i>'}</span><span>${esc(t.name)}</span>${ok ? '' : `<small>${src ? esc(src.replace(/^бронзу /, 'бронза ')) : 'скоро'}</small>`}</button>`;
+    }).join('')}</div><div class="group-foot">Деякі фони відкриваються разом із фоном для котика. У темному режимі iPhone застосунок лишається темним.</div>`;
+  };
+  openSheet({
+    title: 'Фон застосунку', auto: true, left: null, right: { text: 'Готово', fn: () => { closeSheet(); if (done) done(); } },
+    body: `<div id="thBody">${html()}</div>`,
+    onMount(sh) {
+      sh.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-th]'); if (!b) return;
+        const t = THEMES[b.dataset.th];
+        if (b.classList.contains('locked')) return toast(t.bg && itemSource('bg', t.bg) ? 'Відкриється за ' + itemSource('bg', t.bg) : 'Зʼявиться з новими досягненнями');
+        setTheme(b.dataset.th); $('#thBody', sh).innerHTML = html(); if (done) done();
+      });
+    },
+  });
+}
 function unlockedThemes() {
   const un = unlockedItems();
   return new Set(Object.keys(THEMES).filter((k) => !THEMES[k].bg || un.bg.has(THEMES[k].bg)));
